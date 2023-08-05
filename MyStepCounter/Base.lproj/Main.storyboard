@@ -26,17 +26,30 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aNE-qm-AzO">
+                                <rect key="frame" x="20" y="456.66666666666669" width="353" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="PQE-bi-ehe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="abI-2R-WuD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8pC-qa-TWT"/>
                             <constraint firstItem="abI-2R-WuD" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Fa1-NS-0ok"/>
+                            <constraint firstItem="aNE-qm-AzO" firstAttribute="top" secondItem="abI-2R-WuD" secondAttribute="bottom" constant="20" id="GIw-yV-tJ0"/>
+                            <constraint firstItem="aNE-qm-AzO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="KQt-1d-6vv"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="abI-2R-WuD" secondAttribute="trailing" constant="20" id="M0n-kB-6co"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="aNE-qm-AzO" secondAttribute="trailing" constant="20" id="N7k-eK-ZLF"/>
                             <constraint firstItem="abI-2R-WuD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Vy9-Cp-AP0"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="currentStepsLbl" destination="aNE-qm-AzO" id="xMV-ba-E4r"/>
                         <outlet property="myStepsLbl" destination="abI-2R-WuD" id="Wr2-M9-ObL"/>
                     </connections>
                 </viewController>

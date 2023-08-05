@@ -53,6 +53,7 @@
 		62D829852A7EC45D006E7DEE /* MyStepCounterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStepCounterUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		62D829932A7ECD63006E7DEE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		62D829952A7ECD73006E7DEE /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
+		62D829972A7EF99B006E7DEE /* MyStepCounter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyStepCounter.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +104,7 @@
 		62D829612A7EC45A006E7DEE /* MyStepCounter */ = {
 			isa = PBXGroup;
 			children = (
+				62D829972A7EF99B006E7DEE /* MyStepCounter.entitlements */,
 				62D829922A7ECD4F006E7DEE /* Files */,
 				62D829622A7EC45A006E7DEE /* AppDelegate.swift */,
 				62D829642A7EC45A006E7DEE /* SceneDelegate.swift */,
@@ -451,6 +453,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MyStepCounter/MyStepCounter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VTXC8RUG3R;
@@ -481,6 +484,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MyStepCounter/MyStepCounter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VTXC8RUG3R;

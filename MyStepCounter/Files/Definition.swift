@@ -10,6 +10,7 @@ import UIKit
 
 let defaults = UserDefaults.standard
 let lastCount = "LastCount"
+let totalSteps = "TotalSteps"
 
 func setUserDefault(value:Int,key:String) {
     defaults.setValue(value, forKey: key)

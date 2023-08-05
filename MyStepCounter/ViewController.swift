@@ -7,13 +7,17 @@
 
 import UIKit
 import CoreMotion
+import HealthKit
 
 class ViewController: UIViewController {
 
     private let activityManager = CMMotionActivityManager()
     private let pedometer = CMPedometer()
     
+    let healthStore = HKHealthStore()
+    
     @IBOutlet weak var myStepsLbl: UILabel!
+    @IBOutlet weak var currentStepsLbl: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         if(ValueAlreadyExist(key: lastCount)){}
@@ -22,43 +26,61 @@ class ViewController: UIViewController {
             setUserDefault(value: 0, key: lastCount)
         }
         self.checkNotifyPermissions(step: 0)
-//        activityManager.startActivityUpdates(to: OperationQueue.main) { (activity: CMMotionActivity?) in
-//            guard let activity = activity else { return }
-//            DispatchQueue.main.async {
-//                if activity.stationary {
-//                    print("Stationary")
-//                } else if activity.walking {
-//                    print("Walking")
-//                } else if activity.running {
-//                    print("Running")
-//                } else if activity.automotive {
-//                    print("Automotive")
+        
+//        if CMPedometer.isStepCountingAvailable() {
+//            pedometer.startUpdates(from: Date()) { pedometerData, error in
+//                guard let pedometerData = pedometerData, error == nil else { return }
+//                DispatchQueue.main.async {
+//                    print(pedometerData.numberOfSteps.intValue)
+//                    self.currentStepsLbl.text = "Current Steps : \(pedometerData.numberOfSteps.intValue)"
+//
 //                }
 //            }
 //        }
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        if CMPedometer.isStepCountingAvailable() {
-            pedometer.startUpdates(from: Date()) { pedometerData, error in
-                guard let pedometerData = pedometerData, error == nil else { return }
-                DispatchQueue.main.async {
-                    print(pedometerData.numberOfSteps.intValue)
-                    self.myStepsLbl.text = "My Steps : \(pedometerData.numberOfSteps.intValue)"
-                }
-                self.setResult(steps: pedometerData.numberOfSteps.intValue)
+        
+        pedometer.startUpdates(from: Date(), withHandler: { (pedometerData, error) in
+            if let pedData = pedometerData{
+                self.currentStepsLbl.text = "Current Steps:\(pedData.numberOfSteps)"
+            } else {
+                print("no steps")
             }
+        })
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let healthKitTypes: Set = [ HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)! ]
+        // Check for Authorization
+        healthStore.requestAuthorization(toShare: healthKitTypes, read: healthKitTypes) { (bool, error) in
+            if (bool) {
+                // Authorization Successful
+                self.getSteps { (result) in
+                    DispatchQueue.main.async {
+                        let stepCount = String(Int(result))
+                        self.myStepsLbl.text = "Todays Total Steps : " + String(stepCount)
+                        print("hereeee",Int(result))
+                        setUserDefault(value: Int(result), key: totalSteps)
+                        self.setResult(mySteps: Int(result))
+                    }
+                }
+            } // end if
         }
     }
-    func setResult(steps:Int)
+    func setResult(mySteps:Int)
     {
         let last_count = getUserDefault(key: lastCount)!
-        if(steps>last_count)
+        print("last_count",last_count)
+        print("mySteps",mySteps)
+        if(mySteps>last_count)
         {
-            let new_notify_count = last_count + 20
-            if(steps > new_notify_count)
+            let m = mySteps / 20
+            print("mmm",m)
+            let notifyCount = m * 20
+            print("notifyCount",notifyCount)
+            if(last_count < notifyCount)
             {
-                setUserDefault(value: new_notify_count, key: lastCount)
-                self.checkNotifyPermissions(step: steps)
+                setUserDefault(value: notifyCount, key: lastCount)
+                self.checkNotifyPermissions(step: mySteps)
             }
         }
     }
@@ -72,7 +94,7 @@ class ViewController: UIViewController {
             case .authorized:
                 if(step>0)
                 {
-                    self.displayNotification(step: getUserDefault(key: lastCount)!)
+                    self.displayNotification(step: getUserDefault(key: totalSteps)!)
                 }
             case .denied:
                 return
@@ -81,7 +103,7 @@ class ViewController: UIViewController {
                     if didAllow {
                         if(step>0)
                         {
-                            self.displayNotification(step: getUserDefault(key: lastCount)!)
+                            self.displayNotification(step: getUserDefault(key: totalSteps)!)
                         }
                     }
                 }
@@ -92,19 +114,17 @@ class ViewController: UIViewController {
     }
     
     func displayNotification(step:Int){
-        let identifier = "sptep_counter_notification"
+        let identifier = "step_counter_notification"
         let title = "Step Counter"
         let body = "Your steps count for today is \(step) steps"
         
-        let hour = 00
-        let minute = 18
-        
-        let calendar = Calendar.current
-        var dateComponents = DateComponents(calendar: calendar,timeZone: TimeZone.current)
-        dateComponents.hour = hour
-        dateComponents.minute = minute
-        
-        
+//        let hour = 1
+//        let minute = 1
+//
+//        let calendar = Calendar.current
+//        var dateComponents = DateComponents(calendar: calendar,timeZone: TimeZone.current)
+//        dateComponents.hour = hour
+//        dateComponents.minute = minute
     
         let notificationCenter = UNUserNotificationCenter.current()
         let content = UNMutableNotificationContent()
@@ -113,12 +133,57 @@ class ViewController: UIViewController {
         content.sound = .default
         
         
-//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
         notificationCenter.add(request)
+    }
+    
+    func getSteps(completion: @escaping (Double) -> Void) {
+        let type = HKQuantityType.quantityType(forIdentifier: .stepCount)!
+            
+        let now = Date()
+        let startOfDay = Calendar.current.startOfDay(for: now)
+        var interval = DateComponents()
+        interval.day = 1
+        
+        let query = HKStatisticsCollectionQuery(quantityType: type,
+                                               quantitySamplePredicate: nil,
+                                               options: [.cumulativeSum],
+                                               anchorDate: startOfDay,
+                                               intervalComponents: interval)
+        
+        query.initialResultsHandler = { _, result, error in
+                var resultCount = 0.0
+                result!.enumerateStatistics(from: startOfDay, to: now) { statistics, _ in
+
+                if let sum = statistics.sumQuantity() {
+                    // Get steps (they are of double type)
+                    resultCount = sum.doubleValue(for: HKUnit.count())
+                } // end if
+
+                // Return
+                DispatchQueue.main.async {
+                    completion(resultCount)
+                }
+            }
+        }
+        
+        query.statisticsUpdateHandler = {
+            query, statistics, statisticsCollection, error in
+
+            // If new statistics are available
+            if let sum = statistics?.sumQuantity() {
+                let resultCount = sum.doubleValue(for: HKUnit.count())
+                // Return
+                DispatchQueue.main.async {
+                    completion(resultCount)
+                }
+            } // end if
+        }
+        healthStore.execute(query)
     }
 }
 
