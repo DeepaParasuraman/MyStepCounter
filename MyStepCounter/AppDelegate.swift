@@ -6,14 +6,16 @@
 //
 
 import UIKit
+import UserNotifications
 
+@available(iOS 13.0, *)
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
-
-
+    var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        UNUserNotificationCenter.current().delegate = self
         return true
     }
 
@@ -33,4 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+@available(iOS 13.0, *)
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
+    }
+}
+
+
 

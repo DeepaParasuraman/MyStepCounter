@@ -16,6 +16,8 @@
 		62D8297A2A7EC45D006E7DEE /* MyStepCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D829792A7EC45D006E7DEE /* MyStepCounterTests.swift */; };
 		62D829842A7EC45D006E7DEE /* MyStepCounterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D829832A7EC45D006E7DEE /* MyStepCounterUITests.swift */; };
 		62D829862A7EC45D006E7DEE /* MyStepCounterUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D829852A7EC45D006E7DEE /* MyStepCounterUITestsLaunchTests.swift */; };
+		62D829942A7ECD63006E7DEE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D829932A7ECD63006E7DEE /* Extensions.swift */; };
+		62D829962A7ECD73006E7DEE /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D829952A7ECD73006E7DEE /* Definition.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		62D8297F2A7EC45D006E7DEE /* MyStepCounterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyStepCounterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D829832A7EC45D006E7DEE /* MyStepCounterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStepCounterUITests.swift; sourceTree = "<group>"; };
 		62D829852A7EC45D006E7DEE /* MyStepCounterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStepCounterUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		62D829932A7ECD63006E7DEE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		62D829952A7ECD73006E7DEE /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,7 @@
 		62D829612A7EC45A006E7DEE /* MyStepCounter */ = {
 			isa = PBXGroup;
 			children = (
+				62D829922A7ECD4F006E7DEE /* Files */,
 				62D829622A7EC45A006E7DEE /* AppDelegate.swift */,
 				62D829642A7EC45A006E7DEE /* SceneDelegate.swift */,
 				62D829662A7EC45A006E7DEE /* ViewController.swift */,
@@ -125,6 +130,15 @@
 				62D829852A7EC45D006E7DEE /* MyStepCounterUITestsLaunchTests.swift */,
 			);
 			path = MyStepCounterUITests;
+			sourceTree = "<group>";
+		};
+		62D829922A7ECD4F006E7DEE /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				62D829932A7ECD63006E7DEE /* Extensions.swift */,
+				62D829952A7ECD73006E7DEE /* Definition.swift */,
+			);
+			path = Files;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,7 +274,9 @@
 			files = (
 				62D829672A7EC45A006E7DEE /* ViewController.swift in Sources */,
 				62D829632A7EC45A006E7DEE /* AppDelegate.swift in Sources */,
+				62D829962A7ECD73006E7DEE /* Definition.swift in Sources */,
 				62D829652A7EC45A006E7DEE /* SceneDelegate.swift in Sources */,
+				62D829942A7ECD63006E7DEE /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,11 +456,13 @@
 				DEVELOPMENT_TEAM = VTXC8RUG3R;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyStepCounter/Info.plist;
+				INFOPLIST_KEY_NSMotionUsageDescription = "Please allow for counting your steps";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -468,11 +486,13 @@
 				DEVELOPMENT_TEAM = VTXC8RUG3R;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyStepCounter/Info.plist;
+				INFOPLIST_KEY_NSMotionUsageDescription = "Please allow for counting your steps";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
